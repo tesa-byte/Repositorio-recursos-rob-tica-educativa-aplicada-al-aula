@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Catálogo de recursos de robótica educativa y pensamiento computacional.">
+  <title>Repositorio de Robótica Educativa</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#catalogo">Saltar al catálogo</a>
+
+  <header class="site-header">
+    <div class="shell hero">
+      <div>
+        <p class="eyebrow">Recursos educativos seleccionados</p>
+        <h1>Robótica y pensamiento computacional</h1>
+        <p class="intro">Encuentra actividades por edad, etapa, entidad y dispositivo.</p>
+      </div>
+      <div class="hero-mark" aria-hidden="true">R<span>4.0</span></div>
+    </div>
+  </header>
+
+  <main class="shell layout" id="catalogo">
+    <aside class="filters" aria-labelledby="filterHeading">
+      <div class="filters-heading">
+        <h2 id="filterHeading">Filtros</h2>
+        <button id="clearFilters" class="text-button" type="button">Limpiar</button>
+      </div>
+
+      <fieldset>
+        <legend>Edad</legend>
+        <label><input class="filter" type="checkbox" data-filter="edad" value="3-5"> 3–5 años</label>
+        <label><input class="filter" type="checkbox" data-filter="edad" value="6-8"> 6–8 años</label>
+        <label><input class="filter" type="checkbox" data-filter="edad" value="9-12"> 9–12 años</label>
+        <label><input class="filter" type="checkbox" data-filter="edad" value="13-16"> 13–16 años</label>
+        <label><input class="filter" type="checkbox" data-filter="edad" value="17-18"> 17–18 años</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Etapa educativa</legend>
+        <label><input class="filter" type="checkbox" data-filter="etapas" value="infantil"> Infantil</label>
+        <label><input class="filter" type="checkbox" data-filter="etapas" value="primaria"> Primaria</label>
+        <label><input class="filter" type="checkbox" data-filter="etapas" value="secundaria"> Secundaria</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Entidad</legend>
+        <label><input class="filter" type="checkbox" data-filter="entidad" value="JCCM"> JCCM</label>
+        <label><input class="filter" type="checkbox" data-filter="entidad" value="INTEF"> INTEF</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Dispositivo</legend>
+        <label><input class="filter" type="checkbox" data-filter="hardware" value="beebot"> Bee-Bot / Blue-Bot</label>
+        <label><input class="filter" type="checkbox" data-filter="hardware" value="mbot"> mBot / mBot2</label>
+        <label><input class="filter" type="checkbox" data-filter="hardware" value="microbit"> micro:bit</label>
+        <label><input class="filter" type="checkbox" data-filter="hardware" value="scratch"> Scratch</label>
+        <label><input class="filter" type="checkbox" data-filter="hardware" value="makeymakey"> Makey Makey</label>
+        <label><input class="filter" type="checkbox" data-filter="hardware" value="lego"> LEGO Education</label>
+        <label><input class="filter" type="checkbox" data-filter="hardware" value="sin-dispositivo"> Sin dispositivo</label>
+      </fieldset>
+    </aside>
+
+    <section class="results" aria-labelledby="resultsTitle">
+      <div class="toolbar">
+        <label class="search-box">
+          <span aria-hidden="true">⌕</span>
+          <span class="sr-only">Buscar recursos</span>
+          <input id="searchInput" type="search" placeholder="Buscar por título, tema o tecnología…" autocomplete="off">
+        </label>
+        <select id="sortSelect" aria-label="Ordenar resultados">
+          <option value="title">Orden alfabético</option>
+          <option value="age">Edad recomendada</option>
+        </select>
+      </div>
+
+      <div class="results-heading">
+        <h2 id="resultsTitle">Actividades</h2>
+        <p id="resultsCount" aria-live="polite">Cargando catálogo…</p>
+      </div>
+
+      <div id="activeFilters" class="active-filters" aria-live="polite"></div>
+      <div id="cardsGrid" class="cards-grid"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell">Repositorio educativo · Los enlaces abren la fuente original.</div>
+  </footer>
+</body>
+</html>
