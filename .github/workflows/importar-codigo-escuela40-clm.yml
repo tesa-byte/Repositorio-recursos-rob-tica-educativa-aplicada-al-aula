@@ -1,0 +1,37 @@
+name: Importar Código Escuela 4.0 CLM
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "40 6 * * 2"
+
+permissions:
+  contents: write
+
+jobs:
+  importar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Importar recursos de Código Escuela 4.0 CLM
+        run: node scripts/fuentes/importar-codigo-escuela40-clm.mjs
+
+      - name: Comprobar catálogo
+        run: node scripts/validate.mjs
+
+      - name: Guardar catálogo actualizado
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/resources.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Actualizar recursos de Código Escuela 4.0 CLM"
+          git push
