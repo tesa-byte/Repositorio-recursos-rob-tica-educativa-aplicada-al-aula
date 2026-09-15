@@ -1,1 +1,199 @@
-[]
+[
+  {
+    "id": "cs-unplugged-binary-numbers",
+    "titulo": "Números binarios",
+    "descripcion": "Tema de informática desenchufada recomendado para edades de 5 a 10 años.",
+    "fuenteId": "cs-unplugged",
+    "fuente": "CS Unplugged",
+    "entidad": "University of Canterbury",
+    "url": "https://www.csunplugged.org/es/topics/binary-numbers/",
+    "etapas": [
+      "infantil",
+      "primaria"
+    ],
+    "edadMin": 5,
+    "edadMax": 10,
+    "hardware": [
+      "sin-dispositivo"
+    ],
+    "idiomas": [
+      "es"
+    ],
+    "tags": [
+      "pensamiento computacional",
+      "informática desenchufada"
+    ],
+    "tipo": "tema-didactico",
+    "licencia": "CC BY-SA 4.0",
+    "revisado": false
+  },
+  {
+    "id": "cs-unplugged-kidbots",
+    "titulo": "Kidbots",
+    "descripcion": "Tema de informática desenchufada recomendado para edades de 5 a 10 años.",
+    "fuenteId": "cs-unplugged",
+    "fuente": "CS Unplugged",
+    "entidad": "University of Canterbury",
+    "url": "https://www.csunplugged.org/es/topics/kidbots/",
+    "etapas": [
+      "infantil",
+      "primaria"
+    ],
+    "edadMin": 5,
+    "edadMax": 10,
+    "hardware": [
+      "sin-dispositivo"
+    ],
+    "idiomas": [
+      "en"
+    ],
+    "tags": [
+      "pensamiento computacional",
+      "informática desenchufada"
+    ],
+    "tipo": "tema-didactico",
+    "licencia": "CC BY-SA 4.0",
+    "revisado": false
+  },
+  {
+    "id": "cs-unplugged-image-representation",
+    "titulo": "Image Representation",
+    "descripcion": "Tema de informática desenchufada recomendado para edades de 5 a 10 años.",
+    "fuenteId": "cs-unplugged",
+    "fuente": "CS Unplugged",
+    "entidad": "University of Canterbury",
+    "url": "https://www.csunplugged.org/es/topics/image-representation/",
+    "etapas": [
+      "infantil",
+      "primaria"
+    ],
+    "edadMin": 5,
+    "edadMax": 10,
+    "hardware": [
+      "sin-dispositivo"
+    ],
+    "idiomas": [
+      "en"
+    ],
+    "tags": [
+      "pensamiento computacional",
+      "informática desenchufada"
+    ],
+    "tipo": "tema-didactico",
+    "licencia": "CC BY-SA 4.0",
+    "revisado": false
+  },
+  {
+    "id": "cs-unplugged-error-detection-and-correction",
+    "titulo": "Error detection and correction",
+    "descripcion": "Tema de informática desenchufada recomendado para edades de 5 a 10 años.",
+    "fuenteId": "cs-unplugged",
+    "fuente": "CS Unplugged",
+    "entidad": "University of Canterbury",
+    "url": "https://www.csunplugged.org/es/topics/error-detection-and-correction/",
+    "etapas": [
+      "infantil",
+      "primaria"
+    ],
+    "edadMin": 5,
+    "edadMax": 10,
+    "hardware": [
+      "sin-dispositivo"
+    ],
+    "idiomas": [
+      "en"
+    ],
+    "tags": [
+      "pensamiento computacional",
+      "informática desenchufada"
+    ],
+    "tipo": "tema-didactico",
+    "licencia": "CC BY-SA 4.0",
+    "revisado": false
+  },
+  {
+    "id": "cs-unplugged-data-structures-for-searching",
+    "titulo": "Data structures for searching",
+    "descripcion": "Tema de informática desenchufada recomendado para edades de 11 a 14 años.",
+    "fuenteId": "cs-unplugged",
+    "fuente": "CS Unplugged",
+    "entidad": "University of Canterbury",
+    "url": "https://www.csunplugged.org/es/topics/data-structures-for-searching/",
+    "etapas": [
+      "primaria",
+      "secundaria"
+    ],
+    "edadMin": 11,
+    "edadMax": 14,
+    "hardware": [
+      "sin-dispositivo"
+    ],
+    "idiomas": [
+      "en"
+    ],
+    "tags": [
+      "pensamiento computacional",
+      "informática desenchufada"
+    ],
+    "tipo": "tema-didactico",
+    "licencia": "CC BY-SA 4.0",
+    "revisado": false
+  },
+  {
+    "id": "cs-unplugged-searching-algorithms",
+    "titulo": "Searching algorithms",
+    "descripcion": "Tema de informática desenchufada recomendado para edades de 5 a 10 años.",
+    "fuenteId": "cs-unplugged",
+    "fuente": "CS Unplugged",
+    "entidad": "University of Canterbury",
+    "url": "https://www.csunplugged.org/es/topics/searching-algorithms/",
+    "etapas": [
+      "infantil",
+      "primaria"
+    ],
+    "edadMin": 5,
+    "edadMax": 10,
+    "hardware": [
+      "sin-dispositivo"
+    ],
+    "idiomas": [
+      "en"
+    ],
+    "tags": [
+      "pensamiento computacional",
+      "informática desenchufada"
+    ],
+    "tipo": "tema-didactico",
+    "licencia": "CC BY-SA 4.0",
+    "revisado": false
+  },
+  {
+    "id": "cs-unplugged-sorting-networks",
+    "titulo": "Sorting networks",
+    "descripcion": "Tema de informática desenchufada recomendado para edades de 5 a 14 años.",
+    "fuenteId": "cs-unplugged",
+    "fuente": "CS Unplugged",
+    "entidad": "University of Canterbury",
+    "url": "https://www.csunplugged.org/es/topics/sorting-networks/",
+    "etapas": [
+      "infantil",
+      "primaria",
+      "secundaria"
+    ],
+    "edadMin": 5,
+    "edadMax": 14,
+    "hardware": [
+      "sin-dispositivo"
+    ],
+    "idiomas": [
+      "en"
+    ],
+    "tags": [
+      "pensamiento computacional",
+      "informática desenchufada"
+    ],
+    "tipo": "tema-didactico",
+    "licencia": "CC BY-SA 4.0",
+    "revisado": false
+  }
+]
