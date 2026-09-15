@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscador de Recursos - Repositorio de Robótica Educativa</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --badge-infantil: #ec4899;
+      --badge-primaria: #8b5cf6;
+      --badge-secundaria: #10b981;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      padding: 24px;
+    }
+
+    .app-container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 24px;
+    }
+
+    header h1 {
+      font-size: 1.875rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 868px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Panel de Filtros Lateral */
+    .filters-sidebar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      height: fit-content;
+    }
+
+    .filter-group {
+      margin-bottom: 20px;
+    }
+
+    .filter-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .filter-title {
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.938rem;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      accent-color: var(--primary);
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Buscador Superior y Grilla */
+    .search-section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .search-bar-container {
+      display: flex;
+      gap: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 8px 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .search-input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 1rem;
+      color: var(--text-main);
+    }
+
+    .results-count {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Grilla de Tarjetas */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+
+    .badge-infantil { background-color: var(--badge-infantil); }
+    .badge-primaria { background-color: var(--badge-primaria); }
+    .badge-secundaria { background-color: var(--badge-secundaria); }
+
+    .institution-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: #f1f5f9;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .card-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .card-description {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      background: #eff6ff;
+      color: var(--primary);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    .card-footer {
+      border-top: 1px solid var(--border-color);
+      padding-top: 12px;
+    }
+
+    .btn-details {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+      display: inline-block;
+      text-decoration: none;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-details:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px;
+      color: var(--text-muted);
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px dashed var(--border-color);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <header>
+      <h1>Repositorio de Robótica Educativa</h1>
+      <p>Catálogo de situaciones de aprendizaje oficiales con enlaces directos a las fuentes institucionales</p>
+    </header>
+
+    <div class="main-content">
+      <!-- Panel de Filtros Lateral -->
+      <aside class="filters-sidebar">
+        <div class="filter-group">
+          <div class="filter-title">Ámbito Territorial</div>
+          <label class="checkbox-label"><input type="checkbox" class="filter-checkbox" data-filter-type="ambito" value="autonomico" checked> Autonómico (JCCM / CE 4.0)</label>
+          <label class="checkbox-label"><input type="checkbox" class="filter-checkbox" data-filter-type="ambito" value="nacional" checked> Nacional (INTEF / EDIA)</label>
+          <label class="checkbox-label"><input type="checkbox" class="filter-checkbox" data-filter-type="ambito" value="internacional" checked> Internacional (micro:bit / Open Roberta)</label>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-title">Etapa Educativa</div>
+          <label class="checkbox-label"><input type="checkbox" class="filter-checkbox" data-filter-type="etapa" value="infantil" checked> Infantil (3-6 años)</label>
+          <label class="checkbox-label"><input type="checkbox" class="filter-checkbox" data-filter-type="etapa" value="primaria" checked> Primaria (6-12 años)</label>
+          <label class="checkbox-label"><input type="checkbox" class="filter-checkbox" data-filter-type="etapa" value="secundaria" checked> Secundaria (12-18 años)</label>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-title">Hardware / Entorno</div>
+          <label class="checkbox-label"><input type="checkbox" class="filter-checkbox" data-filter-type="hardware" value="tangible" checked> Tangible (Bee-Bot / Blue-Bot)</label>
+          <label class="checkbox-label"><input type="checkbox" class="filter-checkbox" data-filter-type="hardware" value="mbot" checked> mBot / mBot2 / LEGO</label>
+          <label class="checkbox-label"><input type="checkbox" class="filter-checkbox" data-filter-type="hardware" value="microbit" checked> BBC micro:bit</label>
+          <label class="checkbox-label"><input type="checkbox" class="filter-checkbox" data-filter-type="hardware" value="scratch" checked> Scratch / Makey Makey</label>
+        </div>
+      </aside>
+
+      <!-- Zona de Búsqueda y Resultados -->
+      <main class="search-section">
+        <div class="search-bar-container">
+          <span style="color: var(--text-muted);">🔍</span>
+          <input type="text" id="searchInput" class="search-input" placeholder="Buscar por palabra clave, sensor o tecnología (ej. basura, salud, mBot, micro:bit)...">
+        </div>
+
+        <div class="results-count" id="resultsCount">Cargando recursos...</div>
+
+        <!-- Grilla de Tarjetas dinámicas -->
+        <div class="cards-grid" id="cardsGrid"></div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // BASE DE DATOS DE RECURSOS OFICIALES INDEXADOS
+    const baseDeDatosRecursos = [
+      {
+        id: "REA-INF-001",
+        titulo: "Un Viaje al Pasado: Orientación espacial",
+        descripcion: "Situación de aprendizaje LOMLOE con robótica de suelo para trabajar orientación espacial e itinerarios históricos.",
+        etapa: "infantil",
+        ambito: "autonomico",
+        hardware: "tangible",
+        institucion: "JCCM / eXE",
+        tags: ["Bee-Bot", "Sin Pantallas", "LOMLOE"],
+        url: "https://bancoderecursos.castillalamancha.es/exelearningresource/un-viaje-al-pasado/df31ccde-33c1-510c-a373-50846689f7ba"
+      },
+      {
+        id: "REA-PRI-014",
+        titulo: "Misión Basura Cero en los Bosques",
+        descripcion: "Propuesta de innovación educativa para programar mBot2 en la detección, clasificación y recogida de residuos en entornos naturales.",
+        etapa: "primaria",
+        ambito: "autonomico",
+        hardware: "mbot",
+        institucion: "JCCM / Innovación",
+        tags: ["mBot2", "ODS 15", "Sostenibilidad"],
+        url: "https://bancoderecursos.castillalamancha.es/recurso/mision-basura-cero-en-los-bosques/81a9b36d-2e03-4939-9e66-0c4f8a64a64c"
+      },
+      {
+        id: "REA-SEC-028",
+        titulo: "Caja de Aprendizaje: Salud y micro:bit",
+        descripcion: "Propuesta didáctica que utiliza la placa BBC micro:bit para resolver retos sobre salud física, pulsaciones y hábitos saludables.",
+        etapa: "secundaria",
+        ambito: "autonomico",
+        hardware: "microbit",
+        institucion: "JCCM / eXE",
+        tags: ["micro:bit V2", "Sensores", "Salud"],
+        url: "https://bancoderecursos.castillalamancha.es/exelearningresource/caja-de-aprendizaje-salud-y-microbit/d50c86e8-7d98-2222-f68f-dd054d4328fd"
+      },
+      {
+        id: "REA-PRI-005",
+        titulo: "Aprendiendo a programar con mBot",
+        descripcion: "Guía de aula del Ministerio de Educación para el trabajo con motores, sensores de ultrasonidos e infrarrojos en Primaria.",
+        etapa: "primaria",
+        ambito: "nacional",
+        hardware: "mbot",
+        institucion: "Code.INTEF",
+        tags: ["mBot", "Code.INTEF", "Sensórica"],
+        url: "https://code.intef.es/prop_didacticas/aprendiendo-a-programar-con-mbot/"
+      },
+      {
+        id: "REA-INF-002",
+        titulo: "Explorando robots en el aula",
+        descripcion: "REA oficial centrado en la iniciación a la robótica de suelo con Bee-Bot/Blue-Bot y diseño de itinerarios interdisciplinares.",
+        etapa: "infantil",
+        ambito: "nacional",
+        hardware: "tangible",
+        institucion: "Code.INTEF",
+        tags: ["Blue-Bot", "Botonera", "Espacialidad"],
+        url: "https://code.intef.es/prop_didacticas/explorando-robots-en-el-aula/"
+      },
+      {
+        id: "REA-PRI-008",
+        titulo: "Caja de Aprendizaje: ¡Células por todas partes!",
+        descripcion: "REA interactivo que combina la biología celular en Ciencias de la Naturaleza con programación por bloques en Scratch 3.0.",
+        etapa: "primaria",
+        ambito: "autonomico",
+        hardware: "scratch",
+        institucion: "JCCM / eXE",
+        tags: ["Scratch 3.0", "Biología", "Ciencias"],
+        url: "https://bancoderecursos.castillalamancha.es/exelearningresource/caja-de-aprendizaje-celulas-por-todas-partes/d870dff4-4294-05f1-206c-ba74261f1fdf"
+      },
+      {
+        id: "REA-SEC-012",
+        titulo: "Caja de Aprendizaje: Viaje al interior de la mente con mBot2",
+        descripcion: "Exploración avanzada de sensores, síntesis de voz, conectividad Wi-Fi e iniciación a la IA mediante mBot2 en Secundaria.",
+        etapa: "secundaria",
+        ambito: "autonomico",
+        hardware: "mbot",
+        institucion: "JCCM / eXE",
+        tags: ["mBot2", "IA", "Wi-Fi"],
+        url: "https://bancoderecursos.castillalamancha.es/exelearningresource/caja-de-aprendizaje-viaje-al-interior-de-la-mente/5f7832af-2e06-2ef5-20b0-4c9b18643a15"
+      },
+      {
+        id: "REA-PRI-010",
+        titulo: "Crea tu propia orquesta con Makey Makey",
+        descripcion: "Construcción de superficies conductivas e instrumentos musicales interactivos con materiales cotidianos y placa Makey Makey.",
+        etapa: "primaria",
+        ambito: "autonomico",
+        hardware: "scratch",
+        institucion: "JCCM / Música",
+        tags: ["Makey Makey", "Música", "Conductividad"],
+        url: "https://bancoderecursos.castillalamancha.es/recurso/crea-tu-propia-orquesta/740becd2-bb9d-470a-adf8-bf5983d7f0fb"
+      },
+      {
+        id: "REA-INF-004",
+        titulo: "Actividades con Blue-Bot en Educación Especial",
+        descripcion: "Fichero de actividades adaptadas para alumnado con necesidades educativas especiales utilizando Blue-Bot para orientación y autonomía.",
+        etapa: "infantil",
+        ambito: "autonomico",
+        hardware: "tangible",
+        institucion: "JCCM / Inclusión",
+        tags: ["Blue-Bot", "Inclusión", "DUA"],
+        url: "https://bancoderecursos.castillalamancha.es/exelearningresource/actividades-con-blue-bot-en-educacion-especial/7e314706-9647-cc01-7831-d3caabcb4887"
+      },
+      {
+        id: "REA-SEC-030",
+        titulo: "Proyectos y Tutoriales Oficiales micro:bit",
+        descripcion: "Repositorio global de la Fundación micro:bit con lecciones estructuradas por asignaturas, sensores e integración en Python.",
+        etapa: "secundaria",
+        ambito: "internacional",
+        hardware: "microbit",
+        institucion: "micro:bit Org",
+        tags: ["micro:bit", "Python", "MakeCode"],
+        url: "https://microbit.org/projects/make-it-code-it/"
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('searchInput');
+      const checkboxes = document.querySelectorAll('.filter-checkbox');
+      const cardsGrid = document.getElementById('cardsGrid');
+      const resultsCount = document.getElementById('resultsCount');
+
+      // Función para dibujar las tarjetas
+      function renderCards(recursos) {
+        cardsGrid.innerHTML = '';
+
+        if (recursos.length === 0) {
+          cardsGrid.innerHTML = `
+            <div class="no-results">
+              No se han encontrado recursos que coincidan con los filtros seleccionados.
+            </div>`;
+          resultsCount.textContent = 'Mostrando 0 recursos indexados';
+          return;
+        }
+
+        recursos.forEach(item => {
+          const cardHTML = `
+            <article class="card" onclick="window.open('${item.url}', '_blank')">
+              <div>
+                <div class="card-header">
+                  <span class="badge badge-${item.etapa}">${item.etapa}</span>
+                  <span class="institution-tag">${item.institucion}</span>
+                </div>
+                <h2 class="card-title">${item.titulo}</h2>
+                <p class="card-description">${item.descripcion}</p>
+                <div class="card-tags">
+                  ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="${item.url}" target="_blank" class="btn-details" onclick="event.stopPropagation()">
+                  Abrir Recurso Oficial ↗
+                </a>
+              </div>
+            </article>
+          `;
+          cardsGrid.innerHTML += cardHTML;
+        });
+
+        resultsCount.textContent = `Mostrando ${recursos.length} recurso${recursos.length === 1 ? '' : 's'} indexado${recursos.length === 1 ? '' : 's'}`;
+      }
+
+      // Función de filtrado en tiempo real
+      function filterResources() {
+        const query = searchInput.value.toLowerCase().trim();
+
+        const selectedEtapas = Array.from(document.querySelectorAll('.filter-checkbox[data-filter-type="etapa"]:checked')).map(cb => cb.value);
+        const selectedAmbitos = Array.from(document.querySelectorAll('.filter-checkbox[data-filter-type="ambito"]:checked')).map(cb => cb.value);
+        const selectedHardware = Array.from(document.querySelectorAll('.filter-checkbox[data-filter-type="hardware"]:checked')).map(cb => cb.value);
+
+        const recursosFiltrados = baseDeDatosRecursos.filter(item => {
+          const matchEtapa = selectedEtapas.length === 0 || selectedEtapas.includes(item.etapa);
+          const matchAmbito = selectedAmbitos.length === 0 || selectedAmbitos.includes(item.ambito);
+          const matchHardware = selectedHardware.length === 0 || selectedHardware.includes(item.hardware);
+
+          const textoCompleto = `${item.titulo} ${item.descripcion} ${item.tags.join(' ')} ${item.institucion}`.toLowerCase();
+          const matchQuery = query === '' || textoCompleto.includes(query);
+
+          return matchEtapa && matchAmbito && matchHardware && matchQuery;
+        });
+
+        renderCards(recursosFiltrados);
+      }
+
+      // Inicialización
+      renderCards(baseDeDatosRecursos);
+      searchInput.addEventListener('input', filterResources);
+      checkboxes.forEach(cb => cb.addEventListener('change', filterResources));
+    });
+  </script>
+</body>
+</html>
