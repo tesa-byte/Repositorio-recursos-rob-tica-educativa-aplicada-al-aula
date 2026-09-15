@@ -268,17 +268,16 @@
   <div class="app-container">
     <header>
       <h1>Repositorio de Robótica y Pensamiento Computacional</h1>
-      <p>Catálogo integrado de Castilla-La Mancha, repositorios estatales y fuentes abiertas en vivo</p>
+      <p>Catálogo unificado de Castilla-La Mancha y repositorios oficiales</p>
     </header>
 
     <div class="main-content">
-      <!-- Panel de Filtros Lateral Restaurado -->
+      <!-- Panel de Filtros Lateral -->
       <aside class="filters-sidebar">
         <div class="filter-group">
           <div class="filter-title">Ámbito Territorial</div>
           <label class="checkbox-label"><input type="checkbox" class="filter-cb" data-type="ambito" value="autonomico" checked> Autonómico (JCCM / CE 4.0)</label>
           <label class="checkbox-label"><input type="checkbox" class="filter-cb" data-type="ambito" value="nacional" checked> Nacional (INTEF / EDIA)</label>
-          <label class="checkbox-label"><input type="checkbox" class="filter-cb" data-type="ambito" value="internacional" checked> Internacional (micro:bit / Open)</label>
         </div>
 
         <div class="filter-group">
@@ -313,8 +312,8 @@
   </div>
 
   <script>
-    // BASE DE DATOS LOCAL OFICIAL DE CASTILLA-LA MANCHA Y REPOSITORIOS CLAVE
-    const recursosLocalesJCCM = [
+    // BASE DE DATOS LOCAL OFICIAL DE CASTILLA-LA MANCHA Y PROYECTOS CLAVE
+    const recursosBase = [
       {
         id: "CLM-001",
         titulo: "Caja de Aprendizaje: Viaje al interior de la mente con mBot2",
@@ -391,6 +390,28 @@
         institucion: "JCCM / Música",
         tags: ["Makey Makey", "Música", "Scratch", "JCCM"],
         url: "https://bancoderecursos.castillalamancha.es/recurso/crea-tu-propia-orquesta/740becd2-bb9d-470a-adf8-bf5983d7f0fb"
+      },
+      {
+        id: "INT-001",
+        titulo: "Aprendiendo a programar con mBot",
+        descripcion: "Guía de aula del Ministerio de Educación para el trabajo con motores, sensores de ultrasonidos e infrarrojos en Primaria.",
+        etapa: "primaria",
+        ambito: "nacional",
+        hardware: "mbot",
+        institucion: "Code.INTEF",
+        tags: ["mBot", "Code.INTEF", "Sensórica"],
+        url: "https://code.intef.es/prop_didacticas/aprendiendo-a-programar-con-mbot/"
+      },
+      {
+        id: "INT-002",
+        titulo: "Explorando robots en el aula",
+        descripcion: "REA oficial centrado en la iniciación a la robótica de suelo con Bee-Bot/Blue-Bot y diseño de itinerarios interdisciplinares.",
+        etapa: "infantil",
+        ambito: "nacional",
+        hardware: "tangible",
+        institucion: "Code.INTEF",
+        tags: ["Blue-Bot", "Botonera", "Espacialidad"],
+        url: "https://code.intef.es/prop_didacticas/explorando-robots-en-el-aula/"
       }
     ];
 
@@ -400,7 +421,6 @@
       const resultsCount = document.getElementById('resultsCount');
       const filterCBs = document.querySelectorAll('.filter-cb');
 
-      let debounceTimer;
       let apiResources = [];
 
       function stripHTML(html) {
@@ -422,49 +442,26 @@
         if (lower.includes('micro:bit') || lower.includes('microbit')) return 'microbit';
         if (lower.includes('mbot') || lower.includes('lego') || lower.includes('spike')) return 'mbot';
         if (lower.includes('scratch') || lower.includes('makey')) return 'scratch';
-        return 'mbot'; // fallback
+        return 'mbot';
       }
 
-      // Consulta de APIs externas en tiempo real
-      async function fetchExternalAPIs(term) {
-        try {
-          const responseINTEF = await fetch(`https://code.intef.es/wp-json/wp/v2/posts?search=${encodeURIComponent(term)}&per_page=8`);
-          if (!responseINTEF.ok) return [];
-          const dataINTEF = await responseINTEF.json();
-
-          return dataINTEF.map(post => ({
-            id: `intef-${post.id}`,
-            titulo: stripHTML(post.title.rendered),
-            descripcion: stripHTML(post.excerpt.rendered).substring(0, 140) + '...',
-            etapa: detectEtapa(post.title.rendered + " " + post.excerpt.rendered),
-            ambito: 'nacional',
-            hardware: detectHardware(post.title.rendered + " " + post.excerpt.rendered),
-            institucion: 'Code.INTEF',
-            tags: ['Code.INTEF', 'Oficial', 'REA'],
-            url: post.link
-          }));
-        } catch (e) {
-          console.warn("API externa no disponible temporalmente:", e);
-          return [];
-        }
-      }
-
-      // Proceso unificado de filtrado estricto
-      function applyFiltersAndRender() {
+      // FUNCIÓN CLAVE: FILTRADO SÍNCRONO QUE RESPONDE AL INSTANTE
+      function executeFiltering() {
         const query = searchInput.value.toLowerCase().trim();
 
-        // Obtener selecciones de los filtros
+        // Leer casillas seleccionadas de la barra lateral
         const selectedAmbitos = Array.from(document.querySelectorAll('.filter-cb[data-type="ambito"]:checked')).map(cb => cb.value);
         const selectedEtapas = Array.from(document.querySelectorAll('.filter-cb[data-type="etapa"]:checked')).map(cb => cb.value);
         const selectedHardware = Array.from(document.querySelectorAll('.filter-cb[data-type="hardware"]:checked')).map(cb => cb.value);
 
-        // Unificar recursos locales y externos
-        const todoElCatalogo = [...recursosLocalesJCCM, ...apiResources];
+        // Unificar todo el catálogo
+        const todoElCatalogo = [...recursosBase, ...apiResources];
 
+        // Aplicar reglas estrictas de filtrado
         const filtrados = todoElCatalogo.filter(item => {
-          const matchAmbito = selectedAmbitos.length === 0 || selectedAmbitos.includes(item.ambito);
-          const matchEtapa = selectedEtapas.length === 0 || selectedEtapas.includes(item.etapa) || item.etapa === 'general';
-          const matchHardware = selectedHardware.length === 0 || selectedHardware.includes(item.hardware);
+          const matchAmbito = selectedAmbitos.includes(item.ambito);
+          const matchEtapa = selectedEtapas.includes(item.etapa) || item.etapa === 'general';
+          const matchHardware = selectedHardware.includes(item.hardware);
 
           const fullText = `${item.titulo} ${item.descripcion} ${item.tags.join(' ')} ${item.institucion}`.toLowerCase();
           const matchQuery = query === '' || fullText.includes(query);
@@ -514,29 +511,47 @@
         resultsCount.textContent = `Mostrando ${recursos.length} recursos indexados`;
       }
 
-      async function updateSearch() {
-        const query = searchInput.value.trim();
-        resultsCount.textContent = 'Actualizando resultados...';
+      // Consulta de API externa en segundo plano sin bloquear
+      async function fetchExternalAPI(term) {
+        if (!term || term.length < 3) return;
+        try {
+          const response = await fetch(`https://code.intef.es/wp-json/wp/v2/posts?search=${encodeURIComponent(term)}&per_page=6`);
+          if (!response.ok) return;
+          const data = await response.json();
 
-        if (query.length > 2) {
-          apiResources = await fetchExternalAPIs(query);
-        } else {
-          apiResources = await fetchExternalAPIs('robotica');
+          apiResources = data.map(post => ({
+            id: `intef-${post.id}`,
+            titulo: stripHTML(post.title.rendered),
+            descripcion: stripHTML(post.excerpt.rendered).substring(0, 140) + '...',
+            etapa: detectEtapa(post.title.rendered + " " + post.excerpt.rendered),
+            ambito: 'nacional',
+            hardware: detectHardware(post.title.rendered + " " + post.excerpt.rendered),
+            institucion: 'Code.INTEF',
+            tags: ['Code.INTEF', 'Oficial', 'REA'],
+            url: post.link
+          }));
+
+          executeFiltering(); // Re-filtrar una vez descargados los datos de la API
+        } catch (e) {
+          console.warn("API externa no disponible:", e);
         }
-
-        applyFiltersAndRender();
       }
 
-      // Event Listeners
-      searchInput.addEventListener('input', () => {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(updateSearch, 400);
+      // VINCULAR EVENTOS INSTANTÁNEOS
+      filterCBs.forEach(cb => {
+        cb.addEventListener('change', executeFiltering);
       });
 
-      filterCBs.forEach(cb => cb.addEventListener('change', applyFiltersAndRender));
+      searchInput.addEventListener('input', () => {
+        executeFiltering(); // Filtra la base de datos local al instante
+        const val = searchInput.value.trim();
+        if (val.length > 2) {
+          fetchExternalAPI(val); // Trae más recursos externos en segundo plano
+        }
+      });
 
-      // Carga Inicial
-      updateSearch();
+      // Carga inicial directa
+      executeFiltering();
     });
   </script>
 </body>
