@@ -32,4 +32,4 @@ Abre `http://localhost:8000`. No abras `index.html` directamente con doble clic 
 
 ## Siguiente fase
 
-Los importadores se añadirán dentro de `scripts/fuentes/`. Generarán candidatos para `data/pendientes.json`; solo los recursos revisados pasarán a `data/resources.json`.
+El primer importador está en `scripts/fuentes/importar-cs-unplugged.mjs`. La tarea **Importar CS Unplugged** puede ejecutarse manualmente desde la pestaña Actions y también se programa semanalmente. Genera candidatos en `data/pendientes.json`; solo los recursos revisados pasarán posteriormente a `data/resources.json`.
