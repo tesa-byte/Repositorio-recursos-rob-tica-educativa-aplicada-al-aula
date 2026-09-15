@@ -43,12 +43,18 @@
         <label><input class="filter" type="checkbox" data-filter="etapas" value="infantil"> Infantil</label>
         <label><input class="filter" type="checkbox" data-filter="etapas" value="primaria"> Primaria</label>
         <label><input class="filter" type="checkbox" data-filter="etapas" value="secundaria"> Secundaria</label>
+        <label><input class="filter" type="checkbox" data-filter="etapas" value="bachillerato"> Bachillerato</label>
+        <label><input class="filter" type="checkbox" data-filter="etapas" value="fp"> Formación Profesional</label>
       </fieldset>
 
       <fieldset>
-        <legend>Entidad</legend>
-        <label><input class="filter" type="checkbox" data-filter="entidad" value="JCCM"> JCCM</label>
-        <label><input class="filter" type="checkbox" data-filter="entidad" value="INTEF"> INTEF</label>
+        <legend>Fuente</legend>
+        <label><input class="filter" type="checkbox" data-filter="fuenteId" value="jccm"> Banco de Recursos JCCM</label>
+        <label><input class="filter" type="checkbox" data-filter="fuenteId" value="cedec"> CEDEC</label>
+        <label><input class="filter" type="checkbox" data-filter="fuenteId" value="intef-sda"> Situaciones de aprendizaje INTEF</label>
+        <label><input class="filter" type="checkbox" data-filter="fuenteId" value="science-buddies"> Science Buddies</label>
+        <label><input class="filter" type="checkbox" data-filter="fuenteId" value="cs-unplugged"> CS Unplugged</label>
+        <label><input class="filter" type="checkbox" data-filter="fuenteId" value="libreria-educacion"> Librería de Educación</label>
       </fieldset>
 
       <fieldset>
@@ -59,7 +65,18 @@
         <label><input class="filter" type="checkbox" data-filter="hardware" value="scratch"> Scratch</label>
         <label><input class="filter" type="checkbox" data-filter="hardware" value="makeymakey"> Makey Makey</label>
         <label><input class="filter" type="checkbox" data-filter="hardware" value="lego"> LEGO Education</label>
+        <label><input class="filter" type="checkbox" data-filter="hardware" value="mtiny"> mTiny</label>
+        <label><input class="filter" type="checkbox" data-filter="hardware" value="arduino"> Arduino</label>
+        <label><input class="filter" type="checkbox" data-filter="hardware" value="raspberrypi"> Raspberry Pi</label>
+        <label><input class="filter" type="checkbox" data-filter="hardware" value="robot-construido"> Robot construido</label>
         <label><input class="filter" type="checkbox" data-filter="hardware" value="sin-dispositivo"> Sin dispositivo</label>
+        <label><input class="filter" type="checkbox" data-filter="hardware" value="otros"> Otros</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Idioma</legend>
+        <label><input class="filter" type="checkbox" data-filter="idiomas" value="es"> Español</label>
+        <label><input class="filter" type="checkbox" data-filter="idiomas" value="en"> Inglés</label>
       </fieldset>
     </aside>
 
@@ -83,6 +100,7 @@
 
       <div id="activeFilters" class="active-filters" aria-live="polite"></div>
       <div id="cardsGrid" class="cards-grid"></div>
+      <button id="loadMore" class="load-more" type="button" hidden>Cargar más recursos</button>
     </section>
   </main>
 

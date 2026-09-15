@@ -1,0 +1,8 @@
+[
+  {"id":"jccm","nombre":"Banco de Recursos JCCM","url":"https://bancoderecursos.castillalamancha.es/"},
+  {"id":"cedec","nombre":"CEDEC","url":"https://cedec.intef.es/"},
+  {"id":"intef-sda","nombre":"Situaciones de aprendizaje INTEF","url":"https://intef.es/recursos-educativos/situaciones-aprendizaje/"},
+  {"id":"science-buddies","nombre":"Science Buddies","url":"https://www.sciencebuddies.org/blog/robotics-lessons"},
+  {"id":"cs-unplugged","nombre":"CS Unplugged","url":"https://www.csunplugged.org/es/"},
+  {"id":"libreria-educacion","nombre":"Librería de Educación","url":"https://www.libreria.educacion.gob.es/materia/robotica-1/"}
+]

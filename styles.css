@@ -74,6 +74,9 @@ select { min-height: 48px; padding: 0 38px 0 14px; color: var(--ink); background
 .card-link:hover { background: var(--blue-dark); }
 .empty { grid-column: 1 / -1; padding: 46px 24px; background: var(--paper); border: 1px dashed #afbac9; border-radius: var(--radius); text-align: center; color: var(--muted); }
 .empty strong { display: block; margin-bottom: 6px; color: var(--ink); font-size: 1.05rem; }
+.load-more { display: block; margin: 24px auto 0; padding: 11px 22px; border: 1px solid var(--blue); border-radius: 10px; color: var(--blue); background: var(--paper); font-weight: 800; cursor: pointer; }
+.load-more:hover { color: white; background: var(--blue); }
+.load-more[hidden] { display: none; }
 .site-footer { padding: 24px 0; color: var(--muted); background: #e9eef5; font-size: .85rem; }
 
 @media (max-width: 850px) {
