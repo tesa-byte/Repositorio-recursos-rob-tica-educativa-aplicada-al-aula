@@ -1,0 +1,31 @@
+name: Importar CS Unplugged
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "20 6 * * 1"
+
+permissions:
+  contents: write
+
+jobs:
+  importar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Recoger temas de CS Unplugged
+        run: node scripts/fuentes/importar-cs-unplugged.mjs
+
+      - name: Guardar candidatos pendientes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/pendientes.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Actualizar candidatos de CS Unplugged"
+          git push
