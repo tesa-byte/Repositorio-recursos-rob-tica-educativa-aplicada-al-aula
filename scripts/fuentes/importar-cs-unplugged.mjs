@@ -2,6 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 
 const SOURCE_URL = "https://www.csunplugged.org/es/topics/";
 const PENDING_URL = new URL("../../data/pendientes.json", import.meta.url);
+const RESOURCES_URL = new URL("../../data/resources.json", import.meta.url);
 
 function textOnly(html) {
   return html
@@ -84,5 +85,12 @@ try { pending = JSON.parse(await readFile(PENDING_URL, "utf8")); } catch (error)
   if (error.code !== "ENOENT") throw error;
 }
 const otherSources = pending.filter(item => item.fuenteId !== "cs-unplugged");
-await writeFile(PENDING_URL, `${JSON.stringify([...otherSources, ...imported], null, 2)}\n`, "utf8");
-console.log(`Importados ${imported.length} temas de CS Unplugged a data/pendientes.json.`);
+let published = [];
+try { published = JSON.parse(await readFile(RESOURCES_URL, "utf8")); } catch (error) {
+  if (error.code !== "ENOENT") throw error;
+}
+const publishedIds = new Set(published.map(item => item.id));
+const publishedUrls = new Set(published.map(item => item.url));
+const newCandidates = imported.filter(item => !publishedIds.has(item.id) && !publishedUrls.has(item.url));
+await writeFile(PENDING_URL, `${JSON.stringify([...otherSources, ...newCandidates], null, 2)}\n`, "utf8");
+console.log(`Importados ${newCandidates.length} temas nuevos de CS Unplugged (${imported.length} encontrados).`);

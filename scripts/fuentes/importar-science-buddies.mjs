@@ -1,6 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 
 const PENDING_URL = new URL("../../data/pendientes.json", import.meta.url);
+const RESOURCES_URL = new URL("../../data/resources.json", import.meta.url);
 const SOURCE_PAGE = "https://www.sciencebuddies.org/blog/robotics-lessons";
 
 // Science Buddies bloquea las peticiones de GitHub Actions con HTTP 403.
@@ -79,5 +80,12 @@ try {
 }
 
 const otherSources = pending.filter(item => item.fuenteId !== "science-buddies");
-await writeFile(PENDING_URL, `${JSON.stringify([...otherSources, ...imported], null, 2)}\n`, "utf8");
-console.log(`Preparados ${imported.length} candidatos de Science Buddies en data/pendientes.json.`);
+let published = [];
+try { published = JSON.parse(await readFile(RESOURCES_URL, "utf8")); } catch (error) {
+  if (error.code !== "ENOENT") throw error;
+}
+const publishedIds = new Set(published.map(item => item.id));
+const publishedUrls = new Set(published.map(item => item.url));
+const newCandidates = imported.filter(item => !publishedIds.has(item.id) && !publishedUrls.has(item.url));
+await writeFile(PENDING_URL, `${JSON.stringify([...otherSources, ...newCandidates], null, 2)}\n`, "utf8");
+console.log(`Preparados ${newCandidates.length} candidatos nuevos de Science Buddies (${imported.length} enlaces controlados).`);
