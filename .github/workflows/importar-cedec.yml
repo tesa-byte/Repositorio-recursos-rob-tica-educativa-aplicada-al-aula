@@ -1,0 +1,35 @@
+name: Importar CEDEC
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  importar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v5
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Preparar recursos de CEDEC
+        run: node scripts/fuentes/importar-cedec.mjs
+
+      - name: Comprobar catálogo
+        run: node scripts/validate.mjs
+
+      - name: Guardar candidatos
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/pendientes.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Actualizar candidatos de CEDEC"
+          git push
