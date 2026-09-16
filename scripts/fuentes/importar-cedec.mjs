@@ -4,8 +4,8 @@ const PENDING_URL = new URL("../../data/pendientes.json", import.meta.url);
 const RESOURCES_URL = new URL("../../data/resources.json", import.meta.url);
 const SOURCE_PAGE = "https://cedec.intef.es/recursos/";
 
-// CEDEC bloquea las consultas automáticas.
-// Esta selección contiene recursos comprobados en su catálogo oficial.
+// El sistema de seguridad de CEDEC bloquea las consultas automáticas.
+// Esta selección local contiene recursos comprobados en el catálogo oficial.
 const catalogue = [
   [
     "dale-corriente",
@@ -32,30 +32,6 @@ const catalogue = [
     "situacion-aprendizaje"
   ],
   [
-    "operacion-cloud",
-    "Operación 2. Cloud Computing",
-    "REA de Formación Profesional sobre gestión de datos, modelos de servicios en la nube y diseño de un plan de implantación cloud.",
-    "https://descargas.intef.es/cedec/proyectoedia/FP/digitalizacion/contenidos/operacion_cloud/index.html",
-    ["fp"],
-    16,
-    21,
-    ["otros"],
-    ["cloud computing", "datos", "soberanía digital", "Nextcloud"],
-    "situacion-aprendizaje"
-  ],
-  [
-    "operacion-ciberseguridad",
-    "Operación 3. Ciberseguridad",
-    "REA de Formación Profesional para analizar riesgos, proteger datos y elaborar un plan de seguridad ante posibles ciberataques.",
-    "https://descargas.intef.es/cedec/proyectoedia/FP/digitalizacion/contenidos/operacion_ciberseguridad/index.html",
-    ["fp"],
-    16,
-    21,
-    ["otros"],
-    ["ciberseguridad", "protección de datos", "seguridad digital"],
-    "situacion-aprendizaje"
-  ],
-  [
     "operacion-inteligencia-artificial",
     "Operación 4. Inteligencia Artificial",
     "REA de Formación Profesional para identificar aplicaciones de inteligencia artificial y diseñar soluciones basadas en datos de forma crítica y ética.",
@@ -65,18 +41,6 @@ const catalogue = [
     21,
     ["otros"],
     ["inteligencia artificial", "datos", "ética digital"],
-    "situacion-aprendizaje"
-  ],
-  [
-    "operacion-transformacion-digital",
-    "Operación 5. Transformación Digital",
-    "REA de Formación Profesional para desarrollar un proyecto de transformación digital adaptado a una empresa de un sector productivo.",
-    "https://descargas.intef.es/cedec/proyectoedia/FP/digitalizacion/contenidos/operacion_transformacion/index.html",
-    ["fp"],
-    16,
-    21,
-    ["otros"],
-    ["transformación digital", "proyecto tecnológico", "estrategia digital"],
     "situacion-aprendizaje"
   ],
   [
@@ -130,7 +94,6 @@ let pending = [];
 
 try {
   pending = JSON.parse(await readFile(PENDING_URL, "utf8"));
-
   if (!Array.isArray(pending)) {
     throw new Error("data/pendientes.json no contiene una lista");
   }
@@ -142,7 +105,6 @@ let published = [];
 
 try {
   published = JSON.parse(await readFile(RESOURCES_URL, "utf8"));
-
   if (!Array.isArray(published)) {
     throw new Error("data/resources.json no contiene una lista");
   }
@@ -150,31 +112,16 @@ try {
   if (error.code !== "ENOENT") throw error;
 }
 
-const otherSources = pending.filter(
-  item => item.fuenteId !== "cedec"
-);
-
-const publishedIds = new Set(
-  published.map(item => item.id)
-);
-
-const publishedUrls = new Set(
-  published.map(item => item.url)
-);
-
+const otherSources = pending.filter(item => item.fuenteId !== "cedec");
+const publishedIds = new Set(published.map(item => item.id));
+const publishedUrls = new Set(published.map(item => item.url));
 const newCandidates = imported.filter(
-  item =>
-    !publishedIds.has(item.id) &&
-    !publishedUrls.has(item.url)
+  item => !publishedIds.has(item.id) && !publishedUrls.has(item.url)
 );
 
 await writeFile(
   PENDING_URL,
-  `${JSON.stringify(
-    [...otherSources, ...newCandidates],
-    null,
-    2
-  )}\n`,
+  `${JSON.stringify([...otherSources, ...newCandidates], null, 2)}\n`,
   "utf8"
 );
 
