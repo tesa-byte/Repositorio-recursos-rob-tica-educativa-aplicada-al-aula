@@ -1,0 +1,38 @@
+name: Importar recursos INTEF
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  importar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v5
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Importar recursos educativos INTEF
+        run: node scripts/fuentes/importar-intef-sda.mjs
+
+      - name: Comprobar catálogo publicado
+        run: node scripts/validate.mjs
+
+      - name: Comprobar archivo de pendientes
+        run: node -e "const data=require('./data/pendientes.json'); if(!Array.isArray(data)) process.exit(1); console.log('Pendientes válidos:', data.length);"
+
+      - name: Guardar candidatos
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/pendientes.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Añadir recursos educativos INTEF"
+          git push
