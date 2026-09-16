@@ -7913,5 +7913,128 @@
     "tipo": "recurso-educativo",
     "licencia": "Consultar las condiciones en el recurso original",
     "revisado": true
+  },
+  {
+    "id": "cedec-dale-corriente",
+    "titulo": "Dale corriente",
+    "descripcion": "Situación de aprendizaje sobre energía eléctrica, simulación de circuitos con Tinkercad, programación con Scratch y construcción de una maqueta funcional.",
+    "fuenteId": "cedec",
+    "fuente": "CEDEC",
+    "entidad": "CEDEC-INTEF",
+    "url": "https://descargas.intef.es/cedec/proyectoedia/tecnologia/contenidos/dale-corriente_web/index.html",
+    "paginaColeccion": "https://cedec.intef.es/recursos/",
+    "etapas": [
+      "secundaria"
+    ],
+    "edadMin": 12,
+    "edadMax": 14,
+    "hardware": [
+      "scratch",
+      "otros"
+    ],
+    "idiomas": [
+      "es"
+    ],
+    "tags": [
+      "electricidad",
+      "circuitos",
+      "Tinkercad",
+      "Scratch",
+      "proyecto tecnológico"
+    ],
+    "tipo": "situacion-aprendizaje",
+    "licencia": "CC BY-SA 4.0",
+    "revisado": true
+  },
+  {
+    "id": "cedec-operacion-digitalizacion",
+    "titulo": "Operación 1. Digitalización",
+    "descripcion": "REA de Formación Profesional sobre digitalización, tecnologías habilitadoras e Internet de las cosas mediante un reto de divulgación tecnológica.",
+    "fuenteId": "cedec",
+    "fuente": "CEDEC",
+    "entidad": "CEDEC-INTEF",
+    "url": "https://descargas.intef.es/cedec/proyectoedia/FP/digitalizacion/contenidos/operacion_digitalizacion/index.html",
+    "paginaColeccion": "https://cedec.intef.es/recursos/",
+    "etapas": [
+      "fp"
+    ],
+    "edadMin": 16,
+    "edadMax": 21,
+    "hardware": [
+      "otros"
+    ],
+    "idiomas": [
+      "es"
+    ],
+    "tags": [
+      "digitalización",
+      "Internet de las cosas",
+      "IoT",
+      "tecnologías habilitadoras"
+    ],
+    "tipo": "situacion-aprendizaje",
+    "licencia": "CC BY-SA 4.0",
+    "revisado": true
+  },
+  {
+    "id": "cedec-operacion-inteligencia-artificial",
+    "titulo": "Operación 4. Inteligencia Artificial",
+    "descripcion": "REA de Formación Profesional para identificar aplicaciones de inteligencia artificial y diseñar soluciones basadas en datos de forma crítica y ética.",
+    "fuenteId": "cedec",
+    "fuente": "CEDEC",
+    "entidad": "CEDEC-INTEF",
+    "url": "https://descargas.intef.es/cedec/proyectoedia/FP/digitalizacion/contenidos/operacion_ia/index.html",
+    "paginaColeccion": "https://cedec.intef.es/recursos/",
+    "etapas": [
+      "fp"
+    ],
+    "edadMin": 16,
+    "edadMax": 21,
+    "hardware": [
+      "otros"
+    ],
+    "idiomas": [
+      "es"
+    ],
+    "tags": [
+      "inteligencia artificial",
+      "datos",
+      "ética digital"
+    ],
+    "tipo": "situacion-aprendizaje",
+    "licencia": "CC BY-SA 4.0",
+    "revisado": true
+  },
+  {
+    "id": "cedec-variabilidad-software",
+    "titulo": "Variabilidad software y pensamiento computacional",
+    "descripcion": "REA para trabajar abstracción, modelización de opciones y metaprogramación con Snap! mediante la creación de un laberinto configurable.",
+    "fuenteId": "cedec",
+    "fuente": "CEDEC",
+    "entidad": "CEDEC-INTEF",
+    "url": "https://diversolab.us.es/rea-variabilidad/",
+    "paginaColeccion": "https://cedec.intef.es/un-rea-para-trabajar-una-nueva-dimension-del-pensamiento-computacional-la-variabilidad/",
+    "etapas": [
+      "secundaria",
+      "bachillerato",
+      "fp"
+    ],
+    "edadMin": 12,
+    "edadMax": 21,
+    "hardware": [
+      "otros"
+    ],
+    "idiomas": [
+      "es"
+    ],
+    "tags": [
+      "pensamiento computacional",
+      "programación",
+      "Snap!",
+      "variabilidad software"
+    ],
+    "tipo": "recurso-educativo",
+    "licencia": "CC BY-SA 4.0",
+    "revisado": true
   }
 ]
